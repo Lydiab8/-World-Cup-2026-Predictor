@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Aperçu — World Cup 2026 Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0E1A16;
+    --bg-card: #14241F;
+    --bg-card-alt: #1B2E27;
+    --line: rgba(255,255,255,0.08);
+    --accent-gold: #F2B807;
+    --accent-teal: #2BD9A6;
+    --text-chalk: #F3F6F2;
+    --text-muted: #8FA39A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: radial-gradient(circle at 15% -10%, #173026 0%, var(--bg-deep) 55%);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-chalk);
+    padding: 2.5rem 3rem 3rem;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    color: var(--accent-teal);
+    margin-bottom: 0.3rem;
+  }
+  .hero-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 2.6rem;
+    margin: 0.1rem 0 0.6rem 0;
+  }
+  .hero-rule { height: 3px; width: 64px; background: var(--accent-gold); border-radius: 2px; margin-bottom: 1rem; }
+  .hero-caption { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; max-width: 760px; }
+
+  .tabs { display: flex; gap: 1.8rem; border-bottom: 1px solid var(--line); margin-top: 2rem; }
+  .tab {
+    font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.03em; font-size: 0.85rem; color: var(--text-muted);
+    padding-bottom: 0.7rem;
+  }
+  .tab.active { color: var(--text-chalk); border-bottom: 3px solid var(--accent-gold); }
+
+  h2 {
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.03em;
+    font-size: 1rem; color: var(--text-chalk); border-bottom: 1px solid var(--line);
+    padding-bottom: 0.5rem; margin-top: 2.2rem;
+  }
+
+  .match-card {
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(180deg, var(--bg-card-alt), var(--bg-card));
+    border: 1px solid var(--line); border-radius: 14px; padding: 1.4rem 2rem; margin-top: 1rem;
+  }
+  .team { flex: 1; text-align: center; }
+  .team-name { font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; font-size: 1.1rem; }
+  .team-elo { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+  .score-display { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 2.4rem; color: var(--accent-gold); display: flex; align-items: center; gap: 0.6rem; padding: 0 1.6rem; }
+  .score-sep { color: var(--text-muted); font-weight: 500; font-size: 1.6rem; }
+
+  .prob-bar { display: flex; height: 30px; border-radius: 999px; overflow: hidden; border: 1px solid var(--line); margin-top: 0.9rem; }
+  .prob-seg { display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; font-weight: 700; color: var(--bg-deep); }
+  .prob-team1 { background: var(--accent-gold); }
+  .prob-draw  { background: #5B6B65; color: var(--text-chalk); }
+  .prob-team2 { background: var(--accent-teal); }
+  .prob-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.45rem; }
+
+  .row { display: flex; gap: 1.2rem; margin-top: 1.1rem; align-items: flex-start; }
+  .panel { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.2rem; flex: 1; }
+  .panel-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .score-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px solid var(--line); }
+  .score-row:last-child { border-bottom: none; }
+  .score-row .pct { font-family: 'JetBrains Mono', monospace; color: var(--accent-teal); }
+
+  .badge { display: inline-flex; flex-direction: column; align-items: center; gap: 0.2rem; background: var(--bg-card-alt); border: 1px solid var(--line); border-radius: 14px; padding: 0.8rem 1.4rem; }
+  .badge-score { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 700; color: var(--accent-gold); }
+  .badge-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
+
+  .callout { background: var(--bg-card); border-left: 3px solid var(--accent-teal); border-radius: 10px; padding: 0.9rem 1.2rem; font-size: 0.85rem; color: var(--text-muted); margin-top: 1.2rem; }
+
+  .rank-list { margin-top: 1rem; }
+  .rank-row { display: flex; align-items: center; gap: 0.9rem; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+  .rank-row:last-child { border-bottom: none; }
+  .rank-num { font-family: 'JetBrains Mono', monospace; color: var(--text-muted); width: 1.4rem; }
+  .rank-name { font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; width: 9rem; }
+  .rank-bar-track { flex: 1; height: 8px; background: var(--bg-card-alt); border-radius: 4px; overflow: hidden; }
+  .rank-bar-fill { height: 100%; background: var(--accent-teal); border-radius: 4px; }
+  .rank-elo { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--text-chalk); width: 3.2rem; text-align: right; }
+
+  .footer-note { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-top: 2.5rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="hero-eyebrow">Coupe du monde 2026 · Projet data science</p>
+  <h1 class="hero-title" style="font-size:2.6rem;margin:0.1rem 0 0.6rem 0;">⚽ World Cup 2026 Predictor</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-caption">Prédiction de résultats <strong>et de scores exacts</strong>, basée sur un rating <strong>Elo</strong> calculé sur <strong>49 000+ matchs internationaux depuis 1872</strong> et une régression de <strong>Poisson</strong>. Aucun avantage du terrain n'est appliqué : tous les matchs sont traités sur un pied d'égalité.</p>
+
+  <div class="tabs">
+    <div class="tab active">Prédire un match</div>
+    <div class="tab">Prochains matchs — CDM 2026</div>
+    <div class="tab">Classement Elo</div>
+  </div>
+
+  <h2>Choisis deux équipes</h2>
+
+  <div class="match-card">
+    <div class="team">
+      <div class="team-name">France</div>
+      <div class="team-elo">ELO 2009</div>
+    </div>
+    <div class="score-display">
+      <span>2</span><span class="score-sep">–</span><span>1</span>
+    </div>
+    <div class="team">
+      <div class="team-name">Brazil</div>
+      <div class="team-elo">ELO 2041</div>
+    </div>
+  </div>
+
+  <div class="prob-bar">
+    <div class="prob-seg prob-team1" style="width:38%;">38%</div>
+    <div class="prob-seg prob-draw" style="width:24%;">24%</div>
+    <div class="prob-seg prob-team2" style="width:38%;">38%</div>
+  </div>
+  <div class="prob-labels">
+    <span>Victoire France</span><span>Nul</span><span>Victoire Brazil</span>
+  </div>
+
+  <div class="row">
+    <div class="panel" style="flex:2;">
+      <div class="panel-label">Scores les plus probables</div>
+      <div class="score-row"><span>1 – 1</span><span class="pct">9.8 %</span></div>
+      <div class="score-row"><span>2 – 1</span><span class="pct">8.6 %</span></div>
+      <div class="score-row"><span>1 – 0</span><span class="pct">7.4 %</span></div>
+      <div class="score-row"><span>0 – 0</span><span class="pct">6.1 %</span></div>
+    </div>
+    <div class="panel" style="flex:1; display:flex; align-items:center; justify-content:center;">
+      <div class="badge">
+        <span class="badge-score">2 – 1</span>
+        <span class="badge-sub">8.6 % de probabilité</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">💡 Le modèle ne connaît que la force relative des équipes (Elo). C'est un outil de portfolio, pas un pronostiqueur professionnel.</div>
+
+  <h2>Classement Elo — aperçu</h2>
+  <div class="rank-list">
+    <div class="rank-row"><span class="rank-num">1</span><span class="rank-name">Brazil</span><div class="rank-bar-track"><div class="rank-bar-fill" style="width:100%;"></div></div><span class="rank-elo">2041</span></div>
+    <div class="rank-row"><span class="rank-num">2</span><span class="rank-name">France</span><div class="rank-bar-track"><div class="rank-bar-fill" style="width:98%;"></div></div><span class="rank-elo">2009</span></div>
+    <div class="rank-row"><span class="rank-num">3</span><span class="rank-name">Argentina</span><div class="rank-bar-track"><div class="rank-bar-fill" style="width:97%;"></div></div><span class="rank-elo">1998</span></div>
+    <div class="rank-row"><span class="rank-num">4</span><span class="rank-name">England</span><div class="rank-bar-track"><div class="rank-bar-fill" style="width:95%;"></div></div><span class="rank-elo">1965</span></div>
+  </div>
+
+  <p class="footer-note">Données : martj42/international_results (CC0) — Modèle : Elo + régression de Poisson — Projet réalisé par Lydia Bouaoudia.</p>
+
+</div>
+</body>
+</html>

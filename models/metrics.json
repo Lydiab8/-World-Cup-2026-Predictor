@@ -1,0 +1,9 @@
+{
+  "n_train_matches": 27471,
+  "n_test_matches": 4848,
+  "winner_accuracy": 0.5947,
+  "naive_home_baseline": 0.4775,
+  "exact_score_accuracy": 0.1302,
+  "mean_abs_error_goals": 0.9562,
+  "trained_since": "1990-01-01"
+}
