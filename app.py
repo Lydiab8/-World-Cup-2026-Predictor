@@ -248,13 +248,12 @@ QUALIFIED_2026 = all_teams_2026()
 st.markdown(
     """
     <p class="hero-eyebrow">Coupe du monde 2026 · Projet data science</p>
-    <div class="hero-title">⚽ World Cup 2026 Predictor</div>
+    <div class="hero-title"> World Cup 2026 Predictor</div>
     <div class="hero-rule"></div>
     <p class="hero-caption">
         Prédiction de résultats <strong>et de scores exacts</strong> de matchs, basée sur un rating
-        <strong>Elo</strong> calculé sur <strong>49 000+ matchs internationaux depuis 1872</strong> et un
-        modèle de <strong>régression de Poisson</strong>. La Coupe du Monde 2026 est en cours — les résultats
-        déjà joués sont intégrés au modèle en temps réel. Tous les matchs sont traités sur un pied d'égalité :
+        <strong>Elo</strong> calculé sur <strong>des matchs internationaux depuis 1990</strong> et un
+        modèle de <strong>régression de Poisson</strong>.Tous les matchs sont traités sur un pied d'égalité :
         <strong>aucun avantage du terrain n'est appliqué</strong>, conformément au format de la compétition,
         qui se joue presque exclusivement sur sites neutres.
     </p>
@@ -365,9 +364,9 @@ with tab1:
     st.markdown(
         """
         <div class="callout">
-            💡 Le modèle ne connaît que la force relative des équipes (Elo). Il ne prend pas en
+             Le modèle ne connaît que la force relative des équipes (Elo). Il ne prend pas en
             compte les blessures, la forme du jour ou la tactique, et le score exact prédit est
-            le résultat le plus probable parmi des dizaines de scénarios — pas une certitude.
+            le résultat le plus probable parmi des dizaines de scénarios - pas une certitude.
             C'est un outil de portfolio, pas un pronostiqueur professionnel.
         </div>
         """,

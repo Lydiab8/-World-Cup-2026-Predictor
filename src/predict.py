@@ -31,8 +31,7 @@ import pandas as pd
 MODELS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models")
 MAX_GOALS = 7  # au-delà de 7 buts, la probabilité est négligeable
 DEFAULT_ELO = 1500.0
-ELO_SCALE = 400.0  # doit être identique à celle utilisée dans train_model.py
-
+ELO_SCALE = 400.0 
 
 def load_artifacts():
     """Charge le modèle de buts entraîné et le dictionnaire des ratings Elo."""
