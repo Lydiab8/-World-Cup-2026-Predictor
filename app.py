@@ -247,7 +247,7 @@ QUALIFIED_2026 = all_teams_2026()
 # ----------------------------------------------------------------------------
 st.markdown(
     """
-    <p class="hero-eyebrow">Coupe du monde 2026 · Projet data science</p>
+    <p class="hero-eyebrow">Coupe du monde 2026 · </p>
     <div class="hero-title"> World Cup 2026 Predictor</div>
     <div class="hero-rule"></div>
     <p class="hero-caption">
@@ -300,7 +300,7 @@ def render_prediction(team1, team2, result, key_prefix=""):
         <p class="score-note">
             ⓘ Score le plus probable ≠ résultat le plus probable : les victoires se répartissent sur
             plusieurs scores (1-0, 2-1, 3-1…) alors que les nuls se concentrent sur très peu de scores
-            (0-0, 1-1, 2-2…). Un favori net peut donc afficher un score nul comme score le plus probable —
+            (0-0, 1-1, 2-2…). Un favori net peut donc afficher un score nul comme score le plus probable 
             ce n'est pas une contradiction du modèle.
         </p>
         """,
